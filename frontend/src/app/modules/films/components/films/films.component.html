@@ -1,0 +1,34 @@
+<div class="films">
+  <div class="form" [formGroup]="form">
+    <mat-form-field class="select" appearance="fill">
+      <mat-label>Toppings</mat-label>
+      <mat-select [formControl]="genreControl" multiple>
+        <mat-option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field  class="select" appearance="fill">
+      <mat-label>Toppings</mat-label>
+      <mat-select [formControl]="yearsControl" multiple>
+        <mat-option *ngFor="let year of years" [value]="year.name">{{ year.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="film-list" *ngIf="films$ | async as films">
+    <mat-card class="card"  *ngFor="let film of films">
+      <mat-card-header>
+        <mat-card-title>{{ film.id }} | {{ film.genre }} | {{ film.name }}</mat-card-title>
+        <mat-card-subtitle>{{ film.year }}</mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+  </div>
+
+  <button mat-button color="primary" [disabled]="loading$ | async" (click)="onLoadMore()">Load More</button>
+
+  <div class="loader" *ngIf="loading$ | async">
+    <mat-spinner></mat-spinner>
+  </div>
+
+</div>
+
